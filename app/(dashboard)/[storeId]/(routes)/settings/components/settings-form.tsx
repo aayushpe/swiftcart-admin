@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import axios from "axios"
 import { useParams, useRouter } from "next/navigation"
+import { AlertModal } from "@/components/modals/alert-modal"
 
 interface SettingsFormProps {
     initialData: Store
@@ -53,6 +54,12 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
 
     return (
         <>
+            <AlertModal
+                isOpen={open}
+                onClose={() => setOpen(false)}
+                onConfirm={() => {}}
+                loading={loading}
+            />
             <div className="flex items-center justify-between">
                 <Heading
                     title="Settings"
