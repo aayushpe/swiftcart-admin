@@ -1,7 +1,7 @@
 import prismadb from "@/lib/prismadb"
 
 interface DashboardPageProps {
-    params: { storedId: string}
+    params: { storeId: string}
 }
 
 const DashboardPage: React.FC<DashboardPageProps> = async ({
@@ -9,7 +9,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
 }) => {
     const store = await prismadb.store.findFirst({
         where: {
-            id: params.storedId
+            id: params.storeId
         }
     });
 
