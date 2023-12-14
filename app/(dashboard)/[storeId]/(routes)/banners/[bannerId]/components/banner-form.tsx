@@ -1,10 +1,10 @@
 "use client"
 
-import { Store } from "@prisma/client"
+import { Banner } from "@prisma/client"
 import toast from "react-hot-toast"
 import{ Heading } from "@/components/ui/heading"
 import { Button } from "@/components/ui/button"
-import { CogIcon, Trash } from "lucide-react"
+import { CogIcon, GalleryVertical, Trash } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import * as z from "zod"
 import { useForm } from "react-hook-form"
@@ -17,36 +17,54 @@ import { useParams, useRouter } from "next/navigation"
 import { AlertModal } from "@/components/modals/alert-modal"
 import { ApiAlert } from "@/components/ui/api-alert"
 import { useOrigin } from "@/hooks/use-origin"
+import ImageUpload from "@/components/ui/image-upload"
 
-interface SettingsFormProps {
-    initialData: Store
+interface BannerFormProps {
+    initialData: Banner | null
 }
 
 const formSchema = z.object({
-    name: z.string().min(2).max(50),
+    label: z.string().min(2).max(50),
+    imageUrl: z.string().min(2)
   })
 
 
-export const SettingsForm: React.FC<SettingsFormProps> = ({
+export const BannerForm: React.FC<BannerFormProps> = ({
     initialData
 }) => {
     const params = useParams()
     const router = useRouter()
     const origin = useOrigin()
+
     const[open, setOpen] = useState(false)
     const[loading, setLoading] = useState(false)
 
+    const title = initialData ? "Edit banner" : "Create banner"
+    const description = initialData ? "Edit a banner" : "Add a new banner"
+    const toastMessage = initialData ? "Banner updated." : "Banner created."
+    const action = initialData ? "Save Changes" : "Create"
+
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: initialData
+        defaultValues: initialData || {
+            label: '',
+            imageUrl: ''
+        }
       })
       
       const onSubmit = async (data: z.infer<typeof formSchema>) => {
         try{
             setLoading(true)
-            await axios.patch(`/api/stores/${params.storeId}`, data)
+            if (initialData){
+                await axios.patch(`/api/${params.storeId}/banners/${params.bannerId}`, data)
+            } else {
+                await axios.post(`/api/${params.storeId}/banners`, data)
+            }
+
             router.refresh()
-            toast.success("Store updated.")
+            router.push(`/${params.storeId}/banners`)
+            toast.success(toastMessage)
             setLoading(false)
 
         } catch (error) {
@@ -58,13 +76,12 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
       const onDelete = async () => {
         try {
             setLoading(true)
-            const storeName = initialData.name 
-            await axios.delete(`/api/stores/${params.storeId}`)
+            await axios.delete(`/api/${params.storeId}/banners/${params.billboardId}`)
             router.push("/")
             router.refresh()
-            toast.success(`Store ${storeName} has successfully been deleted.`)
+            toast.success(`Banner deleted.`)
         } catch (error) {
-            toast.error("Make sure you removed all products and categories first.")
+            toast.error("Make sure you removed all categories using this billboard first.")
         } finally {
             setLoading(false)
             setOpen(false)
@@ -81,12 +98,13 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
             />
             <div className="flex items-center justify-between">
                 <div className="flex items-center"> {/* Container for CogIcon and Heading */}
-                    <CogIcon className=" mr-2" /> {/* Adjust the size as needed */}
+                    <GalleryVertical className=" mr-2" /> {/* Adjust the size as needed */}
                         <Heading
-                            title="Settings"
-                            description="Manage store preferences"
+                            title= {title}
+                            description= {description}
                         />
                 </div>
+                {initialData && (
                 <Button
                     disabled={loading}
                     variant="destructive"
@@ -95,19 +113,38 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
                 >
                 <Trash className="h-4 w-4" />
                 </Button>
+                )}
             </div>
             <Separator/>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+                    <FormField
+                        control={form.control}
+                        name = "imageUrl"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Background image</FormLabel>
+                                <FormControl>
+                                    <ImageUpload
+                                        value={field.value ? [field.value] : []}
+                                        disabled={loading}
+                                        onChange={(url) => field.onChange(url)}
+                                        onRemove={() => field.onChange("")}
+                                    />
+                                </FormControl>
+                                <FormMessage/>
+                            </FormItem>
+                        )}
+                    />
                     <div className="grid grid-cols-3 gap-8">
                         <FormField
                             control={form.control}
-                            name = "name"
+                            name = "label"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Name</FormLabel>
+                                    <FormLabel>Label</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Store name" {...field}/>
+                                        <Input disabled={loading} placeholder="Banner label" {...field}/>
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>
@@ -115,16 +152,11 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
                         />
                     </div>
                     <Button disabled={loading} className="ml-auto" type="submit">
-                        Save Changes
+                        {action}
                     </Button>
                 </form>
             </Form>
             <Separator/>
-            <ApiAlert
-                title="NEXT_PUBLIC_API_URL"
-                description= {`${origin}/api/${params.storeId}`}
-                variant= "public"
-            />
         </>
     )
 }
