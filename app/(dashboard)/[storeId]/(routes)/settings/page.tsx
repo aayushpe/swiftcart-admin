@@ -9,6 +9,7 @@ interface SettingsPageProps {
     }
 }
 
+// @ts-ignore
 const SettingsPage: React.FC<SettingsPageProps> = async ({
     params
 }) => {

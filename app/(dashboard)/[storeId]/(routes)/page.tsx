@@ -4,6 +4,7 @@ interface DashboardPageProps {
     params: { storeId: string}
 }
 
+// @ts-ignore
 const DashboardPage: React.FC<DashboardPageProps> = async ({
     params
 }) => {
