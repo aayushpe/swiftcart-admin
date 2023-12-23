@@ -33,7 +33,6 @@ export const BannerForm: React.FC<BannerFormProps> = ({
 }) => {
     const params = useParams()
     const router = useRouter()
-    const origin = useOrigin()
 
     const[open, setOpen] = useState(false)
     const[loading, setLoading] = useState(false)
@@ -61,8 +60,8 @@ export const BannerForm: React.FC<BannerFormProps> = ({
                 await axios.post(`/api/${params.storeId}/banners`, data)
             }
 
-            router.refresh()
             router.push(`/${params.storeId}/banners`)
+            router.refresh()
             toast.success(toastMessage)
             setLoading(false)
 
