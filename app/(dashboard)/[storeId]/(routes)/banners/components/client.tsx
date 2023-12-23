@@ -1,14 +1,15 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { DataTable } from "@/components/ui/data-table"
 import { Heading } from "@/components/ui/heading"
 import { Separator } from "@/components/ui/separator"
-import { Banner } from "@prisma/client"
 import { GalleryVertical, Plus } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
+import { BannerColumn, columns } from "./columns"
 
 interface BannerClientProps {
-    data: Banner[]
+    data: BannerColumn[]
 }
 
 export const BannerClient: React.FC<BannerClientProps> = ({
@@ -35,6 +36,7 @@ export const BannerClient: React.FC<BannerClientProps> = ({
             </div>
             
             <Separator/>
+            <DataTable columns={ columns } data={ data }/>
         </>
     )
 }
