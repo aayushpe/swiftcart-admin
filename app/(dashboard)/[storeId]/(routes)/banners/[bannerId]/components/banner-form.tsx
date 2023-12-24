@@ -74,8 +74,8 @@ export const BannerForm: React.FC<BannerFormProps> = ({
       const onDelete = async () => {
         try {
             setLoading(true)
-            await axios.delete(`/api/${params.storeId}/banners/${params.billboardId}`)
-            router.push("/")
+            await axios.delete(`/api/${params.storeId}/banners/${params.bannerId}`);
+            router.push(`/${params.storeId}/banners`)
             router.refresh()
             toast.success(`Banner deleted.`)
         } catch (error) {
