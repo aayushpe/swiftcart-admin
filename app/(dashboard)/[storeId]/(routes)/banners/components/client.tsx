@@ -1,5 +1,6 @@
 "use client"
 
+import { ApiList } from "@/components/ui/api-list"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table"
 import { Heading } from "@/components/ui/heading"
@@ -37,6 +38,15 @@ export const BannerClient: React.FC<BannerClientProps> = ({
             
             <Separator/>
             <DataTable searchKey="label" columns={ columns } data={ data }/>
+            <Heading
+                title={"API"}
+                description={"API calls for banners"}
+            />
+            <Separator/>
+            <ApiList
+                entityName="banners"
+                entityIdName="bannerId"
+            />
         </>
     )
 }
