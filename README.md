@@ -10,7 +10,7 @@ git clone https://github.com/aayushpe/swiftcart-admin
 
 ## Installing Packages
 ```bash
-npm i
+npm install
 ```
 
 ## Setting up Environment Variables
