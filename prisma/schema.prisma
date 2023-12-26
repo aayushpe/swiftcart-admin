@@ -37,6 +37,7 @@ model Category {
   store Store @relation("StoretoCategory", fields: [storeId], references: [id])
   bannerId String
   banner Banner @relation(fields: [bannerId], references: [id])
+  name String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   

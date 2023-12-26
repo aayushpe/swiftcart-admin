@@ -16,17 +16,21 @@ export function MainNav ({
             label: 'Home',
             active: pathname === `/${params.storeId}`
         },
-
+        {
+            href: `/${params.storeId}/banners`,
+            label: 'Banners',
+            active: pathname === `/${params.storeId}/banners`
+        },
+        {
+            href: `/${params.storeId}/categories`,
+            label: 'Categories',
+            active: pathname === `/${params.storeId}/categories`
+        },
         {
             href: `/${params.storeId}/settings`,
             label: 'Settings',
             active: pathname === `/${params.storeId}/settings`
         },
-        {
-            href: `/${params.storeId}/banners`,
-            label: 'Banners',
-            active: pathname === `/${params.storeId}/banners`
-        }
     ]
     return (
         <nav
