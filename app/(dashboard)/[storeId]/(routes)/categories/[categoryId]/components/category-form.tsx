@@ -1,6 +1,6 @@
 "use client"
 
-import { Banner } from "@prisma/client"
+import { Category } from "@prisma/client"
 import toast from "react-hot-toast"
 import{ Heading } from "@/components/ui/heading"
 import { Button } from "@/components/ui/button"
@@ -15,20 +15,18 @@ import { Input } from "@/components/ui/input"
 import axios from "axios"
 import { useParams, useRouter } from "next/navigation"
 import { AlertModal } from "@/components/modals/alert-modal"
-import { useOrigin } from "@/hooks/use-origin"
-import ImageUpload from "@/components/ui/image-upload"
 
-interface BannerFormProps {
-    initialData: Banner | null
+interface CategoryFormProps {
+    initialData: Category | null
 }
 
 const formSchema = z.object({
-    label: z.string().min(2).max(50),
-    imageUrl: z.string().min(2)
+    name: z.string().min(2).max(50),
+    bannerId: z.string().min(2)
   })
 
 
-export const BannerForm: React.FC<BannerFormProps> = ({
+export const CategoryForm: React.FC<CategoryFormProps> = ({
     initialData
 }) => {
     const params = useParams()
@@ -37,17 +35,17 @@ export const BannerForm: React.FC<BannerFormProps> = ({
     const[open, setOpen] = useState(false)
     const[loading, setLoading] = useState(false)
 
-    const title = initialData ? "Edit banner" : "Create banner"
-    const description = initialData ? "Edit a banner" : "Add a new banner"
-    const toastMessage = initialData ? "Banner updated." : "Banner created."
+    const title = initialData ? "Edit category" : "Create category"
+    const description = initialData ? "Edit a category" : "Add a new category"
+    const toastMessage = initialData ? "Category updated." : "Category created."
     const action = initialData ? "Save Changes" : "Create"
 
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
-            label: '',
-            imageUrl: ''
+            name: '',
+            bannerId: ''
         }
       })
       
@@ -116,33 +114,15 @@ export const BannerForm: React.FC<BannerFormProps> = ({
             <Separator/>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
-                    <FormField
-                        control={form.control}
-                        name = "imageUrl"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Background image</FormLabel>
-                                <FormControl>
-                                    <ImageUpload
-                                        value={field.value ? [field.value] : []}
-                                        disabled={loading}
-                                        onChange={(url) => field.onChange(url)}
-                                        onRemove={() => field.onChange("")}
-                                    />
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
                     <div className="grid grid-cols-3 gap-8">
                         <FormField
                             control={form.control}
-                            name = "label"
+                            name = "name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Label</FormLabel>
+                                    <FormLabel>Name</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Banner label" {...field}/>
+                                        <Input disabled={loading} placeholder="Category name" {...field}/>
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>
