@@ -1,6 +1,6 @@
 "use client"
 
-import { Category } from "@prisma/client"
+import { Banner, Category } from "@prisma/client"
 import toast from "react-hot-toast"
 import{ Heading } from "@/components/ui/heading"
 import { Button } from "@/components/ui/button"
@@ -15,9 +15,11 @@ import { Input } from "@/components/ui/input"
 import axios from "axios"
 import { useParams, useRouter } from "next/navigation"
 import { AlertModal } from "@/components/modals/alert-modal"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface CategoryFormProps {
     initialData: Category | null
+    banners: Banner[]
 }
 
 const formSchema = z.object({
@@ -27,7 +29,8 @@ const formSchema = z.object({
 
 
 export const CategoryForm: React.FC<CategoryFormProps> = ({
-    initialData
+    initialData,
+    banners
 }) => {
     const params = useParams()
     const router = useRouter()
@@ -124,6 +127,41 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                                     <FormControl>
                                         <Input disabled={loading} placeholder="Category name" {...field}/>
                                     </FormControl>
+                                    <FormMessage/>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name = "bannerId"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Banner</FormLabel>
+                                        <Select 
+                                        disabled={loading} 
+                                        onValueChange={field.onChange} 
+                                        value={field.value} 
+                                        defaultValue={field.value}
+                                        >
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue
+                                                    defaultValue={field.value}
+                                                    placeholder="Select a banner"
+                                                />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {banners.map((banner) => ( 
+                                                <SelectItem
+                                                    key={banner.id}
+                                                    value={banner.id}
+                                                >
+                                                    {banner.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                        </Select>
                                     <FormMessage/>
                                 </FormItem>
                             )}
