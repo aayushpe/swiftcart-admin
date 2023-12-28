@@ -35,7 +35,7 @@ export const CellAction: React.FC<CellActionProps> = ({
             router.refresh()
             toast.success(`Banner deleted.`)
         } catch (error) {
-            toast.error("Make sure you removed all categories using this billboard first.")
+            toast.error("Make sure you removed all categories under this banner first.")
         } finally {
             setLoading(false)
             setOpen(false)
