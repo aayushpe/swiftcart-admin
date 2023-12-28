@@ -24,7 +24,7 @@ interface BannerFormProps {
 
 const formSchema = z.object({
     label: z.string().min(2).max(50),
-    imageUrl: z.string().min(2)
+    imageUrl: z.string()
   })
 
 
