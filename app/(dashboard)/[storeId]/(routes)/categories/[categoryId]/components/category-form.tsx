@@ -56,12 +56,12 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
         try{
             setLoading(true)
             if (initialData){
-                await axios.patch(`/api/${params.storeId}/banners/${params.bannerId}`, data)
+                await axios.patch(`/api/${params.storeId}/categories/${params.categoryId}`, data)
             } else {
-                await axios.post(`/api/${params.storeId}/banners`, data)
+                await axios.post(`/api/${params.storeId}/categories`, data)
             }
 
-            router.push(`/${params.storeId}/banners`)
+            router.push(`/${params.storeId}/categories`)
             router.refresh()
             toast.success(toastMessage)
             setLoading(false)
@@ -75,12 +75,12 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
       const onDelete = async () => {
         try {
             setLoading(true)
-            await axios.delete(`/api/${params.storeId}/banners/${params.bannerId}`);
-            router.push(`/${params.storeId}/banners`)
+            await axios.delete(`/api/${params.storeId}/categories/${params.categoryId}`);
+            router.push(`/${params.storeId}/categories`)
             router.refresh()
-            toast.success(`Banner deleted.`)
+            toast.success(`Category deleted.`)
         } catch (error) {
-            toast.error("Make sure you removed all categories using this billboard first.")
+            toast.error("Make sure you removed all products using this category first.")
         } finally {
             setLoading(false)
             setOpen(false)

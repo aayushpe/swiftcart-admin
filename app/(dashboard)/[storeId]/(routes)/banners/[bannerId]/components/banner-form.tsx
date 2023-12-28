@@ -79,7 +79,7 @@ export const BannerForm: React.FC<BannerFormProps> = ({
             router.refresh()
             toast.success(`Banner deleted.`)
         } catch (error) {
-            toast.error("Make sure you removed all categories using this billboard first.")
+            toast.error("Make sure you removed all categories using this banner first.")
         } finally {
             setLoading(false)
             setOpen(false)

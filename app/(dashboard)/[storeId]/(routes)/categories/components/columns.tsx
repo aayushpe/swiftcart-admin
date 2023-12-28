@@ -19,12 +19,12 @@ export const columns: ColumnDef<CategoryColumn>[] = [
   },
   {
     accessorKey: "banner",
-    header: "",
+    header: "Banner",
     cell: ({ row }) => row.original.bannerLabel
   },
   {
     accessorKey: "createdAt",
-    header: "date",
+    header: "Date",
   },
   {
     id: "actions",

@@ -5,13 +5,13 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Copy, Edit, MoreHorizontal, TrashIcon } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import toast from "react-hot-toast"
-import { BannerColumn } from "./columns"
+import { CategoryColumn } from "./columns"
 import { useState } from "react"
 import axios from "axios"
 import { AlertModal } from "@/components/modals/alert-modal"
 
 interface CellActionProps {
-    data: BannerColumn
+    data: CategoryColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({
@@ -30,12 +30,12 @@ export const CellAction: React.FC<CellActionProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true)
-            await axios.delete(`/api/${params.storeId}/banners/${data.id}`);
-            router.push(`/${params.storeId}/banners`)
+            await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
+            router.push(`/${params.storeId}/categories`)
             router.refresh()
-            toast.success(`Banner deleted.`)
+            toast.success(`Categories deleted.`)
         } catch (error) {
-            toast.error("Make sure you removed all categories using this billboard first.")
+            toast.error("Make sure you removed all products under this category first.")
         } finally {
             setLoading(false)
             setOpen(false)
@@ -65,7 +65,7 @@ export const CellAction: React.FC<CellActionProps> = ({
                     <Copy className="mr-2 h-4 w-4"/>
                     Copy Id
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/banners/${data.id}`)}>
+                <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/categories/${data.id}`)}>
                     <Edit className="mr-2 h-4 w-4"/>
                     Update
                 </DropdownMenuItem>
