@@ -46,15 +46,42 @@ export function MainNav({
   ];
 
   return (
+    <nav
+        className={cn("flex items-center space-x-4 lg:space-x-6", className)}
+    >
+
+    {routes.map((route) => (
+        <Link
+            key={route.href}
+            href={route.href}
+            className={cn(
+                `text-sm font-medium ${route.active ? "text-blue-600 border-b-2 border-blue-600 dark:text-blue-300" : "text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"}`,
+                route.active ? "text-black dark:text-white" : "text-muted-foreground"
+            )}
+        >
+            {route.label}
+        
+        </Link>
+    ))}
+    </nav>
+)
+}
+
+
+
+
+/*
+return (
     <nav className={`flex items-center space-x-4 lg:space-x-6 ${className}`}>
       {routes.map((route) => (
-        <Link key={route.href} href={route.href} passHref legacyBehavior>
-          <a className={`text-sm font-medium transition duration-150 ease-in-out ${route.active ? "text-blue-600 border-b-2 border-blue-600 dark:text-blue-300" : "text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"}`}>
-            {route.icon && <FontAwesomeIcon icon={route.icon} className="mr-2" />} {/* Render icon if it exists */}
+        <Link key={route.href} href={route.href}
+          className={`text-sm font-medium ${route.active ? "text-blue-600 border-b-2 border-blue-600 dark:text-blue-300" : "text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"}`}>
+            {<FontAwesomeIcon icon={route.icon} className="mr-2" />} 
             {route.label}
-          </a>
         </Link>
       ))}
     </nav>
   );
 }
+
+*/

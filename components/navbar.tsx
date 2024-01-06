@@ -1,12 +1,9 @@
-// Import statements as before
-import { UserButton, auth } from "@clerk/nextjs";
-import { MainNav } from "./main-nav";
-import StoreSwitcher from "./store-switcher";
-import { redirect } from "next/navigation";
-import prismadb from "@/lib/prismadb";
-import { ThemeToggle } from "./theme-toggle";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faImage, faTags, faRuler, faCog } from '@fortawesome/free-solid-svg-icons';
+import { UserButton, auth } from "@clerk/nextjs"
+import { MainNav } from "./main-nav"
+import StoreSwitcher from "./store-switcher"
+import { redirect } from "next/navigation"
+import prismadb from "@/lib/prismadb"
+import { ThemeToggle } from "./theme-toggle"
 
 const Navbar = async() => {
     const { userId } = auth()
@@ -21,7 +18,7 @@ const Navbar = async() => {
     })
     
     return (
-        <div className="border-b border-gray-200 dark:border-gray-700">
+        <div className="border-b">
             <div className="flex h-16 items-center px-4">
                 <StoreSwitcher items={stores}/>
 
