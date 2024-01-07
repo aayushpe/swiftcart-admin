@@ -5,13 +5,13 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Copy, Edit, MoreHorizontal, TrashIcon } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import toast from "react-hot-toast"
-import { SizeColumn } from "./columns"
+import { ColorColumn } from "./columns"
 import { useState } from "react"
 import axios from "axios"
 import { AlertModal } from "@/components/modals/alert-modal"
 
 interface CellActionProps {
-    data: SizeColumn
+    data: ColorColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({
@@ -30,8 +30,8 @@ export const CellAction: React.FC<CellActionProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true)
-            await axios.delete(`/api/${params.storeId}/sizes/${data.id}`);
-            router.push(`/${params.storeId}/sizes`)
+            await axios.delete(`/api/${params.storeId}/colors/${data.id}`);
+            router.push(`/${params.storeId}/colors`)
             router.refresh()
             toast.success(`Size deleted.`)
         } catch (error) {
@@ -65,7 +65,7 @@ export const CellAction: React.FC<CellActionProps> = ({
                     <Copy className="mr-2 h-4 w-4"/>
                     Copy Id
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/sizes/${data.id}`)}>
+                <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/colors/${data.id}`)}>
                     <Edit className="mr-2 h-4 w-4"/>
                     Update
                 </DropdownMenuItem>

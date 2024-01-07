@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table"
 import { Heading } from "@/components/ui/heading"
 import { Separator } from "@/components/ui/separator"
-import { Plus, Ruler } from "lucide-react"
+import { Palette, Plus } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import { ColorColumn, columns } from "./columns"
 
@@ -23,7 +23,7 @@ export const ColorClient: React.FC<ColorClientProps> = ({
         <>
             <div className="flex items-center justify-between"> {/* Container for CogIcon, Heading, and Badge */}
                 <div className="flex items-center"> {/* Container for Badge and Heading */}
-                    <Ruler className="mr-2" /> {/* Adjust the size as needed */}
+                    <Palette className="mr-2" /> {/* Adjust the size as needed */}
                     <Heading
                         title={`Colors (${data.length})`}
                         description="Manage colors for your store"

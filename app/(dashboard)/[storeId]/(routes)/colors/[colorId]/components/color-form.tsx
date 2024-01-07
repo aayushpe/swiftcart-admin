@@ -1,6 +1,6 @@
 "use client"
 
-import { Size } from "@prisma/client"
+import { Color } from "@prisma/client"
 import toast from "react-hot-toast"
 import{ Heading } from "@/components/ui/heading"
 import { Button } from "@/components/ui/button"
@@ -17,12 +17,14 @@ import { useParams, useRouter } from "next/navigation"
 import { AlertModal } from "@/components/modals/alert-modal"
 
 interface ColorFormProps {
-    initialData: Size | null
+    initialData: Color | null
 }
 
 const formSchema = z.object({
     name: z.string().min(2).max(50),
-    value: z.string().min(1)
+    value: z.string().min(4).regex(/^#/, {
+        message: 'String must be a valid hex code'
+    })
   })
 
 
@@ -122,7 +124,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Size name" {...field}/>
+                                        <Input disabled={loading} placeholder="Color name" {...field}/>
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>
@@ -134,9 +136,13 @@ export const ColorForm: React.FC<ColorFormProps> = ({
                             name = "value"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Value</FormLabel>
+                                    <FormLabel>Color Hex Value</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Value" {...field}/>
+                                        <div className="flex items-center gap-x-4">
+                                            <Input disabled={loading} placeholder="Value" {...field}/>
+                                            <div className="border p-4 rounded-full" style={{backgroundColor:field.value}}>
+                                            </div>
+                                        </div>
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>
