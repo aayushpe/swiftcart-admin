@@ -1,9 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { useParams, usePathname } from "next/navigation";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faImage, faTags, faRuler, faCog } from '@fortawesome/free-solid-svg-icons';
+import { useParams, usePathname } from "next/navigation"
 
 export function MainNav({
   className,
@@ -17,31 +15,26 @@ export function MainNav({
       href: `/${params.storeId}`,
       label: 'Home',
       active: pathname === `/${params.storeId}`,
-      icon: faHome,
     },
     {
       href: `/${params.storeId}/banners`,
       label: 'Banners',
       active: pathname === `/${params.storeId}/banners`,
-      icon: faImage,
     },
     {
       href: `/${params.storeId}/categories`,
       label: 'Categories',
       active: pathname === `/${params.storeId}/categories`,
-      icon: faTags,
     },
     {
       href: `/${params.storeId}/sizes`,
       label: 'Sizes',
       active: pathname === `/${params.storeId}/sizes`,
-      icon: faRuler,
     },
     {
       href: `/${params.storeId}/settings`,
       label: 'Settings',
-      active: pathname === `/${params.storeId}/settings`,
-      icon: faCog,
+      active: pathname === `/${params.storeId}/settings`
     },
   ];
 
@@ -59,9 +52,11 @@ export function MainNav({
                 route.active ? "text-black dark:text-white" : "text-muted-foreground"
             )}
         >
+
             {route.label}
         
         </Link>
+
     ))}
     </nav>
 )
